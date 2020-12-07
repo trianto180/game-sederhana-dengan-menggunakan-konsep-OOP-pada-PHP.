@@ -1,0 +1,140 @@
+<?php
+trait Hewan{
+    public $nama;
+    public $darah = 50;
+    public $jumlahKaki;
+    public $keahlian;
+
+        public function set_nama($nama)
+        {
+            $this->nama = $nama;
+        }
+        public function get_nama()
+        {
+            return $this->nama;
+        }
+        public function set_darah($darah)
+        {
+            $this->darah = $darah;
+        }
+        public function get_darah()
+        {
+            return $this->darah;
+        }
+        public function set_jumlahKaki($jumlahKaki)
+        {
+            $this->jumlahKaki = $jumlahKaki;
+        }
+        public function get_jumlahKaki()
+        {
+            return $this->jumlahKaki;
+        }
+        public function set_keahlian($keahlian)
+        {
+            $this->keahlian = $keahlian;
+        }
+        public function get_keahlian()
+        {
+            return $this->keahlian;
+        }
+    public function atraksi()
+    {
+        return $this->nama.' sedang '.$this->keahlian;
+    }
+}
+
+trait Fight{
+    use Hewan;
+    public $attackPower;
+    public $defensePower;
+
+        public function set_attackPower($attackPower)
+        {
+            $this->attackPower = $attackPower;
+        }
+        public function get_attackPower()
+        {
+            return $this->attackPower;
+        }
+        public function set_defensePower($defensePower)
+        {
+            $this->defensePower = $defensePower;
+        }
+        public function get_defensePower()
+        {
+            return $this->defensePower;
+        }
+    public function serang($nama)
+    {
+        return $this->nama." sedang menyerang ".$nama;
+    }
+    public function diserang($attackPower)
+    {
+        $this->set_darah($this->get_darah()-($attackPower-$this->get_defensePower()));
+        echo $this->nama." sedang diserang";
+        echo '<br>';
+        echo 'Sisa Nyawa dari '.$this->get_nama().' adalah '.$this->get_darah();
+    }
+}
+
+class Elang{
+    use Fight, Hewan;
+    public function getInfoHewan()
+    {
+        return 'Nama: '.$this->get_nama().'Jumlah Kaki: '.$this->get_jumlahKaki().' Keahlian: '.$this->get_keahlian().' Attack = '.$this->get_attackPower().'Defense ='.$this->get_defensePower().' Sisa Nyawa: '.$this->get_darah();
+    }
+}
+
+class Harimau{
+    use Fight, Hewan;
+    public function getInfoHewan()
+    {
+        return 'Nama: '.$this->get_nama().' Jumlah Kaki: '.$this->get_jumlahKaki().' Keahlian: '.$this->get_keahlian().' Attack = '.$this->get_attackPower().'Defense='.$this->get_defensePower().' Sisa Nyawa: '.$this->get_darah();
+    }
+}
+
+
+$elang1 = new Elang();
+$elang1->set_nama('elang1');
+$elang1->set_jumlahKaki(2);
+$elang1->set_keahlian('Terbang Tinggi');
+$elang1->set_attackPower(10);
+$elang1->set_defensePower(5);
+echo'Nama: '.$elang1->get_nama().' Jumlah Kaki: '.$elang1->get_jumlahKaki().' Keahlian: '.$elang1->get_keahlian().' Attack = '.$elang1->get_attackPower().' Defense = '.$elang1->get_defensePower();
+echo '<br>';
+echo $elang1->atraksi();
+echo '<br>';
+
+$harimau1 = new Harimau();
+$harimau1->set_nama('harimau1');
+$harimau1->set_jumlahKaki(4);
+$harimau1->set_keahlian('Lari Cepat');
+$harimau1->set_attackPower(7);
+$harimau1->set_defensePower(8);
+echo'Nama: '.$harimau1->get_nama().' Jumlah Kaki: '.$harimau1->get_jumlahKaki().' Keahlian: '.$harimau1->get_keahlian().' Attack = '.$harimau1->get_attackPower().'Defense = '.$harimau1->get_defensePower();
+echo '<br>';
+echo $harimau1->atraksi();
+echo '<br>';
+
+echo $harimau1->serang($elang1->get_nama());
+echo '<br>';
+echo $elang1->diserang($harimau1->get_attackPower());
+echo '<br>';
+echo $harimau1->serang($elang1->get_nama());
+echo '<br>';
+echo $elang1->diserang($harimau1->get_attackPower());
+echo '<br>';
+echo $elang1->serang($harimau1->get_nama());
+echo '<br>';
+echo $harimau1->diserang($elang1->get_attackPower());
+echo '<br>';
+echo $elang1->serang($harimau1->get_nama());
+echo '<br>';
+echo $harimau1->diserang($elang1->get_attackPower());
+echo '<br>';
+
+echo $elang1->getInfoHewan();
+echo '<br>';
+echo $harimau1->getInfoHewan();
+
+?>
